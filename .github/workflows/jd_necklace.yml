@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '10 */4 * * *'
-  # watch:
-  #   types: started
+  watch:
+    types: [started]
   repository_dispatch:
     types: jd_necklace
 jobs:
@@ -18,9 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
+      #- name: Checkout
+       # run: |
+        #  git clone -b master https://gitlab.com/MrRight/Scripts.git ~/scripts
       - name: Checkout
-        run: |
-          git clone -b master https://gitlab.com/MrRight/Scripts.git ~/scripts
+        uses: actions/checkout@v2
+        with:
+          repository: Jone2008/JD
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -43,10 +47,11 @@ jobs:
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          PETSHARECODES: ${{ secrets.PETSHARECODES }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY }}
